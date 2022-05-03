@@ -4,8 +4,7 @@ import { continentTotal, countryTotal } from "../data/locationData";
 
 function ShowAllData() {
   return (
-    <div>
-      <h2> All Data</h2>
+    <div className="location-data-tbl">
       {locations.map((continent, i) => {
         return (
           <section className="location-tbl-data" key={i}>

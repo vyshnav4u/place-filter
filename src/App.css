@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  position: relative;
 }
 
 h1,
@@ -54,6 +55,37 @@ ul.tbl-continent-data > li {
   background: #2c2a2a;
 }
 
-.user-input-form {
-  margin-bottom: 60px;
+.location-data-tbl {
+  margin-top: 60px;
+}
+
+.suggestion-wrap {
+  background: #a4a4a4;
+  width: 300px;
+  margin: auto;
+  position: absolute;
+  top: 44px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.suggestion-wrap li {
+  padding: 12px;
+  color: #000;
+  border-bottom: 1px solid #757474;
+  cursor: pointer;
+}
+
+.suggestion-wrap li:hover {
+  background: #afaeae;
+}
+
+.suggestion-wrap li:active {
+  background: #c2c0c0;
+}
+
+section.user-input-form {
+  display: grid;
+  justify-content: center;
+  position: relative;
 }

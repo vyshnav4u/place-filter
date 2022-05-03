@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { locations } from "./data/locationData";
 import ShowData from "./components/ShowData";
+import SuggestPlaces from "./components/SuggestPlaces";
 
 function App() {
   const [userInput, setUserInput] = useState("");
@@ -60,7 +61,7 @@ function App() {
 
   return (
     <div className="App">
-      <form className="user-input-form">
+      <section className="user-input-form">
         <input
           id="user-input"
           type="text"
@@ -68,12 +69,9 @@ function App() {
           onChange={(e) => setUserInput(e.target.value)}
           autoComplete="off"
         />
-      </form>
-      <section className="suggestion-wrap">
-        {placeSuggestion.map((place, i) => {
-          return <p key={i}>{place.cityName}</p>;
-        })}
+        <SuggestPlaces placeSuggestion={placeSuggestion} />
       </section>
+
       <ShowData
         placeSuggestion={placeSuggestion}
         cityInSuggestion={cityInSuggestion}
