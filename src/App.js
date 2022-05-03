@@ -6,10 +6,12 @@ import ShowData from "./components/ShowData";
 function App() {
   const [userInput, setUserInput] = useState("");
   const [placeSuggestion, setPlaceSuggestion] = useState([]);
+  const [cityInSuggestion, setCityInSuggestion] = useState([]);
   const [countryInSuggestion, setCountryInSuggestion] = useState([]);
   const [continentInSuggestion, setContinentInSuggestion] = useState([]);
   let tempCountryInSuggestion = [];
   let tempContinentInSuggestion = [];
+  let tempCityInSuggestion = [];
 
   useEffect(() => {
     const tempSuggestions = [];
@@ -20,6 +22,7 @@ function App() {
 
     tempCountryInSuggestion = [];
     tempContinentInSuggestion = [];
+    tempCityInSuggestion = [];
 
     locations.forEach((continent) => {
       continent.children.forEach((country) => {
@@ -41,11 +44,15 @@ function App() {
             }
             if (!tempContinentInSuggestion.includes(continent.label))
               tempContinentInSuggestion.push(continent.label);
+
+            if (!tempCityInSuggestion.includes(city.label))
+              tempCityInSuggestion.push(city.label);
           }
         });
       });
     });
 
+    setCityInSuggestion(tempCityInSuggestion);
     setCountryInSuggestion(tempCountryInSuggestion);
     setContinentInSuggestion(tempContinentInSuggestion);
     setPlaceSuggestion(tempSuggestions);
@@ -53,7 +60,7 @@ function App() {
 
   return (
     <div className="App">
-      <form>
+      <form className="user-input-form">
         <input
           id="user-input"
           type="text"
@@ -69,6 +76,7 @@ function App() {
       </section>
       <ShowData
         placeSuggestion={placeSuggestion}
+        cityInSuggestion={cityInSuggestion}
         countryInSuggestion={countryInSuggestion}
         continentInSuggestion={continentInSuggestion}
       />
