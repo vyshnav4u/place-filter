@@ -6,6 +6,7 @@ import SuggestPlaces from "./components/SuggestPlaces";
 
 function App() {
   const [userInput, setUserInput] = useState("");
+  const [showSuggestions, setShowSuggestions] = useState(true);
   const [placeSuggestion, setPlaceSuggestion] = useState([]);
   const [cityInSuggestion, setCityInSuggestion] = useState([]);
   const [countryInSuggestion, setCountryInSuggestion] = useState([]);
@@ -67,9 +68,16 @@ function App() {
           type="text"
           value={userInput}
           onChange={(e) => setUserInput(e.target.value)}
+          onKeyUp={() => setShowSuggestions(true)}
           autoComplete="off"
         />
-        <SuggestPlaces placeSuggestion={placeSuggestion} />
+        {showSuggestions && (
+          <SuggestPlaces
+            placeSuggestion={placeSuggestion}
+            setUserInput={setUserInput}
+            setShowSuggestions={setShowSuggestions}
+          />
+        )}
       </section>
 
       <ShowData
