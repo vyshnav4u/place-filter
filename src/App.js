@@ -21,25 +21,38 @@ function App() {
     locationData,
     userInput,
     level,
+    insertAllFlag = false,
+    insertAllFlagSetLevel = 0,
     parentLabel = {},
     matchedPlace = []
   ) => {
     locationData.map((location) => {
       if ("children" in location) {
+        if (location.label.toLowerCase().includes(userInput.toLowerCase())) {
+          insertAllFlag = true;
+          insertAllFlagSetLevel = level;
+        }
+
         parentLabel = { ...parentLabel, ["level" + level]: location.label };
         let tempArray = findMatch(
           location.children,
           userInput,
           ++level,
+          insertAllFlag,
+          insertAllFlagSetLevel,
           parentLabel,
           []
         );
 
         matchedPlace = [...matchedPlace, ...tempArray];
-        parentLabel = {};
+        // parentLabel = {};
+        const tempDeleteKey = "level" + level;
+        delete parentLabel[tempDeleteKey];
         --level;
+        if (level === insertAllFlagSetLevel) insertAllFlag = false;
       } else if (
-        location.label.toLowerCase().includes(userInput.toLowerCase())
+        location.label.toLowerCase().includes(userInput.toLowerCase()) ||
+        insertAllFlag
       ) {
         matchedPlace.push({
           ...parentLabel,
@@ -47,6 +60,7 @@ function App() {
         });
       }
     });
+
     return matchedPlace;
   };
 
@@ -57,55 +71,9 @@ function App() {
       return;
     }
 
-    tempSuggestions = findMatch(locations, userInput, 0);
-    console.log(tempSuggestions);
-  }, [userInput]);
-  /*
-  useEffect(() => {
-    const tempSuggestions = [];
-    if (!userInput) {
-      setPlaceSuggestion(tempSuggestions);
-      return;
-    }
-
-    tempCountryInSuggestion = [];
-    tempContinentInSuggestion = [];
-    tempCityInSuggestion = [];
-
-    locations.forEach((continent) => {
-      continent.children.forEach((country) => {
-        country.children.forEach((city) => {
-          const cityData = {
-            cityName: city.label,
-            countryName: country.label,
-            continentName: continent.label,
-          };
-
-          if (
-            city.label.toLowerCase().includes(userInput.toLowerCase()) ||
-            country.label.toLowerCase() === userInput.toLowerCase() ||
-            continent.label.toLowerCase() === userInput.toLowerCase()
-          ) {
-            tempSuggestions.push(cityData);
-            if (!tempCountryInSuggestion.includes(country.label)) {
-              tempCountryInSuggestion.push(country.label);
-            }
-            if (!tempContinentInSuggestion.includes(continent.label))
-              tempContinentInSuggestion.push(continent.label);
-
-            if (!tempCityInSuggestion.includes(city.label))
-              tempCityInSuggestion.push(city.label);
-          }
-        });
-      });
-    });
-
-    setCityInSuggestion(tempCityInSuggestion);
-    setCountryInSuggestion(tempCountryInSuggestion);
-    setContinentInSuggestion(tempContinentInSuggestion);
+    tempSuggestions = findMatch(locations, userInput, 0, false);
     setPlaceSuggestion(tempSuggestions);
   }, [userInput]);
-  */
 
   return (
     <div className="App">
