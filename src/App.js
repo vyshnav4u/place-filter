@@ -15,6 +15,33 @@ function App() {
   let tempContinentInSuggestion = [];
   let tempCityInSuggestion = [];
 
+  // # need obj {lvl1:continent,lvl2:country:lvl3:city...}
+
+  const findMatch = (locationData, userInput, matchedPlace = []) => {
+    locationData.map((location) => {
+      if (location.label.toLowerCase().includes(userInput.toLowerCase())) {
+        matchedPlace.push(location.label);
+      }
+      if ("children" in location) {
+        let tempArray = findMatch(location.children, userInput, []);
+
+        matchedPlace = [...matchedPlace, ...tempArray];
+      }
+    });
+    return matchedPlace;
+  };
+
+  useEffect(() => {
+    let tempSuggestions = [];
+    if (!userInput.trim()) {
+      setPlaceSuggestion(tempSuggestions);
+      return;
+    }
+
+    tempSuggestions = findMatch(locations, userInput);
+    console.log(tempSuggestions);
+  }, [userInput]);
+  /*
   useEffect(() => {
     const tempSuggestions = [];
     if (!userInput) {
@@ -59,6 +86,7 @@ function App() {
     setContinentInSuggestion(tempContinentInSuggestion);
     setPlaceSuggestion(tempSuggestions);
   }, [userInput]);
+  */
 
   return (
     <div className="App">

@@ -8,7 +8,6 @@ function ShowData(props) {
   const countryInSuggestion = props.countryInSuggestion;
   const continentInSuggestion = props.continentInSuggestion;
 
-  console.log(countryInSuggestion);
   let showFilteredTable = false;
   if (placeSuggestion.length > 0) showFilteredTable = true;
   return (
