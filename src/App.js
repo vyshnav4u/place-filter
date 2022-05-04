@@ -36,6 +36,8 @@ function App() {
         );
 
         matchedPlace = [...matchedPlace, ...tempArray];
+        parentLabel = {};
+        --level;
       } else if (
         location.label.toLowerCase().includes(userInput.toLowerCase())
       ) {
