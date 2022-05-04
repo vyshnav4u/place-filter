@@ -1,12 +1,16 @@
 import React from "react";
 import { locations } from "../data/locationData";
-import { continentTotal, countryTotal } from "../data/locationData";
+import { findTotalOfFilterTable } from "../data/locationData";
 
 function ShowFilteredData(props) {
   const continentInSuggestion = props.continentInSuggestion;
   const countryInSuggestion = props.countryInSuggestion;
   const cityInSuggestion = props.cityInSuggestion;
-  console.log(cityInSuggestion);
+  const { continentTotal, countryTotal } = findTotalOfFilterTable(
+    cityInSuggestion,
+    countryInSuggestion,
+    continentInSuggestion
+  );
   return (
     <div className="location-data-tbl">
       {locations.map((continent, i) => {

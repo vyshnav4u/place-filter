@@ -53,21 +53,56 @@ export const locations = [
   },
 ];
 
-let continentTotal = {};
-let countryTotal = {};
-let tempContinentTotal = 0;
-let tempCountryTotal = 0;
-locations.map((continent, i) => {
-  tempContinentTotal = 0;
-  continent.children.map((country) => {
-    tempCountryTotal = 0;
-    country.children.map((city) => {
-      tempContinentTotal += city.value;
-      tempCountryTotal += city.value;
+export const findTotalOfAllLocation = () => {
+  let continentTotal = {};
+  let countryTotal = {};
+  let tempContinentTotal = 0;
+  let tempCountryTotal = 0;
+  locations.map((continent, i) => {
+    tempContinentTotal = 0;
+    continent.children.map((country) => {
+      tempCountryTotal = 0;
+      country.children.map((city) => {
+        tempContinentTotal += city.value;
+        tempCountryTotal += city.value;
+      });
+      countryTotal = { ...countryTotal, [country.label]: tempCountryTotal };
     });
-    countryTotal = { ...countryTotal, [country.label]: tempCountryTotal };
+    continentTotal = {
+      ...continentTotal,
+      [continent.label]: tempContinentTotal,
+    };
   });
-  continentTotal = { ...continentTotal, [continent.label]: tempContinentTotal };
-});
 
-export { continentTotal, countryTotal };
+  return { continentTotal, countryTotal };
+};
+export const findTotalOfFilterTable = (
+  cityInSuggestion,
+  countryInSuggestion,
+  continentInSuggestion
+) => {
+  let continentTotal = {};
+  let countryTotal = {};
+  let tempContinentTotal = 0;
+  let tempCountryTotal = 0;
+  locations.map((continent, i) => {
+    if (!continentInSuggestion.includes(continent.label)) return;
+    tempContinentTotal = 0;
+    continent.children.map((country) => {
+      if (!countryInSuggestion.includes(country.label)) return;
+      tempCountryTotal = 0;
+      country.children.map((city) => {
+        if (!cityInSuggestion.includes(city.label)) return;
+        tempContinentTotal += city.value;
+        tempCountryTotal += city.value;
+      });
+      countryTotal = { ...countryTotal, [country.label]: tempCountryTotal };
+    });
+    continentTotal = {
+      ...continentTotal,
+      [continent.label]: tempContinentTotal,
+    };
+  });
+
+  return { continentTotal, countryTotal };
+};

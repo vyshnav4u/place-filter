@@ -1,8 +1,9 @@
 import React from "react";
 import { locations } from "../data/locationData";
-import { continentTotal, countryTotal } from "../data/locationData";
+import { findTotalOfAllLocation } from "../data/locationData";
 
 function ShowAllData() {
+  const { continentTotal, countryTotal } = findTotalOfAllLocation();
   return (
     <div className="location-data-tbl">
       {locations.map((continent, i) => {
