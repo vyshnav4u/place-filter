@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { locations } from "./data/locationData";
 import ShowData from "./components/ShowData";
+import SuggestPlaces from "./components/SuggestPlaces";
 
 function App() {
   const [userInput, setUserInput] = useState("");
+  const [showSuggestions, setShowSuggestions] = useState(true);
   const [placeSuggestion, setPlaceSuggestion] = useState([]);
   const [cityInSuggestion, setCityInSuggestion] = useState([]);
   const [countryInSuggestion, setCountryInSuggestion] = useState([]);
@@ -60,20 +62,24 @@ function App() {
 
   return (
     <div className="App">
-      <form className="user-input-form">
+      <section className="user-input-form">
         <input
           id="user-input"
           type="text"
           value={userInput}
           onChange={(e) => setUserInput(e.target.value)}
+          onKeyUp={() => setShowSuggestions(true)}
           autoComplete="off"
         />
-      </form>
-      <section className="suggestion-wrap">
-        {placeSuggestion.map((place, i) => {
-          return <p key={i}>{place.cityName}</p>;
-        })}
+        {showSuggestions && (
+          <SuggestPlaces
+            placeSuggestion={placeSuggestion}
+            setUserInput={setUserInput}
+            setShowSuggestions={setShowSuggestions}
+          />
+        )}
       </section>
+
       <ShowData
         placeSuggestion={placeSuggestion}
         cityInSuggestion={cityInSuggestion}

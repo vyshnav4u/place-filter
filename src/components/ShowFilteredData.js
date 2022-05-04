@@ -8,8 +8,7 @@ function ShowFilteredData(props) {
   const cityInSuggestion = props.cityInSuggestion;
   console.log(cityInSuggestion);
   return (
-    <div>
-      <h2> Filtered Data </h2>
+    <div className="location-data-tbl">
       {locations.map((continent, i) => {
         if (!continentInSuggestion.includes(continent.label)) return;
 
