@@ -17,15 +17,32 @@ function App() {
 
   // # need obj {lvl1:continent,lvl2:country:lvl3:city...}
 
-  const findMatch = (locationData, userInput, matchedPlace = []) => {
+  const findMatch = (
+    locationData,
+    userInput,
+    level,
+    parentLabel = {},
+    matchedPlace = []
+  ) => {
     locationData.map((location) => {
-      if (location.label.toLowerCase().includes(userInput.toLowerCase())) {
-        matchedPlace.push(location.label);
-      }
       if ("children" in location) {
-        let tempArray = findMatch(location.children, userInput, []);
+        parentLabel = { ...parentLabel, ["level" + level]: location.label };
+        let tempArray = findMatch(
+          location.children,
+          userInput,
+          ++level,
+          parentLabel,
+          []
+        );
 
         matchedPlace = [...matchedPlace, ...tempArray];
+      } else if (
+        location.label.toLowerCase().includes(userInput.toLowerCase())
+      ) {
+        matchedPlace.push({
+          ...parentLabel,
+          ["level" + level]: location.label,
+        });
       }
     });
     return matchedPlace;
@@ -38,7 +55,7 @@ function App() {
       return;
     }
 
-    tempSuggestions = findMatch(locations, userInput);
+    tempSuggestions = findMatch(locations, userInput, 0);
     console.log(tempSuggestions);
   }, [userInput]);
   /*
