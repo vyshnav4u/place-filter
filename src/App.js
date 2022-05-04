@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import "./App.css";
-import { locations } from "./data/locationData";
-import ShowData from "./components/ShowData";
-import SuggestPlaces from "./components/SuggestPlaces";
+import { useEffect, useState } from 'react';
+import './App.css';
+import { locations } from './data/locationData';
+import ShowData from './components/ShowData';
+import SuggestPlaces from './components/SuggestPlaces';
 
 function App() {
-  const [userInput, setUserInput] = useState("");
+  const [userInput, setUserInput] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(true);
   const [placeSuggestion, setPlaceSuggestion] = useState([]);
   const [cityInSuggestion, setCityInSuggestion] = useState([]);
@@ -15,6 +15,32 @@ function App() {
   let tempContinentInSuggestion = [];
   let tempCityInSuggestion = [];
 
+  const findMatch = (locationData, userInput, matchedPlace = []) => {
+    locationData.map((location) => {
+      if (location.label.toLowerCase().includes(userInput.toLowerCase())) {
+        // console.log(location.label);
+        matchedPlace.push(location.label);
+      }
+      if ('children' in location) {
+        let tempArray = findMatch(location.children, userInput, []);
+        console.log(tempArray);
+        matchedPlace = [...matchedPlace, ...tempArray];
+      }
+    });
+    return matchedPlace;
+  };
+  useEffect(() => {
+    let tempSuggestions = [];
+    if (!userInput) {
+      setPlaceSuggestion(tempSuggestions);
+      return;
+    }
+
+    tempSuggestions = findMatch(locations, userInput);
+    console.log(tempSuggestions);
+  }, [userInput]);
+
+  /*
   useEffect(() => {
     const tempSuggestions = [];
     if (!userInput) {
@@ -59,6 +85,7 @@ function App() {
     setContinentInSuggestion(tempContinentInSuggestion);
     setPlaceSuggestion(tempSuggestions);
   }, [userInput]);
+  */
 
   return (
     <div className="App">
