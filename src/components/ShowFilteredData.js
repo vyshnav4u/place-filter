@@ -5,6 +5,7 @@ function ShowFilteredData(props) {
   let tot = {};
   let tempSum;
   const placesInSuggestions = props.placesInSuggestions;
+
   const displayLocationData = (location, level = 0) => {
     return (
       <section className="place-data">
@@ -17,10 +18,9 @@ function ShowFilteredData(props) {
             return;
           if ("children" in place) {
             const renderHtml = displayLocationData(place.children, ++level);
-            // tempSum = tot["level" + level];
-            // tot["level" + level] = 0;
+
             --level;
-            // tot["level" + level] = tot["level" + Number(level + 1)];
+
             if (tot["level" + Number(level - 1)])
               tot["level" + Number(level - 1)] += tot["level" + level];
             else tot["level" + Number(level - 1)] = tot["level" + level];
