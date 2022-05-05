@@ -14,6 +14,8 @@ function App() {
   let tempCountryInSuggestion = [];
   let tempContinentInSuggestion = [];
   let tempCityInSuggestion = [];
+  let tempPlacesInSuggestions = {};
+  const [placesInSuggestions, setPlacesInSuggestions] = useState({});
 
   // # need obj {lvl1:continent,lvl2:country:lvl3:city...}
 
@@ -54,6 +56,31 @@ function App() {
         location.label.toLowerCase().includes(userInput.toLowerCase()) ||
         insertAllFlag
       ) {
+        const insertSuggestion = {
+          ...parentLabel,
+          ["level" + level]: location.label,
+        };
+
+        const allKeys = Object.keys(insertSuggestion);
+
+        for (let key of allKeys) {
+          if (tempPlacesInSuggestions.hasOwnProperty(key)) {
+            if (
+              !tempPlacesInSuggestions[key].includes(
+                insertSuggestion[key].toLowerCase()
+              )
+            ) {
+              tempPlacesInSuggestions[key].push(
+                insertSuggestion[key].toLowerCase()
+              );
+            }
+          } else {
+            tempPlacesInSuggestions[key] = [
+              insertSuggestion[key].toLowerCase(),
+            ];
+          }
+        }
+
         matchedPlace.push({
           ...parentLabel,
           ["level" + level]: location.label,
@@ -73,6 +100,7 @@ function App() {
 
     tempSuggestions = findMatch(locations, userInput, 0, false);
     setPlaceSuggestion(tempSuggestions);
+    setPlacesInSuggestions(tempPlacesInSuggestions);
   }, [userInput]);
 
   return (
@@ -97,6 +125,7 @@ function App() {
 
       <ShowData
         placeSuggestion={placeSuggestion}
+        placesInSuggestions={placesInSuggestions}
         cityInSuggestion={cityInSuggestion}
         countryInSuggestion={countryInSuggestion}
         continentInSuggestion={continentInSuggestion}

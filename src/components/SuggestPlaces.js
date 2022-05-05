@@ -4,6 +4,7 @@ function SuggestPlaces(props) {
   const placeSuggestion = props.placeSuggestion;
   const setUserInput = props.setUserInput;
   const setShowSuggestions = props.setShowSuggestions;
+
   // let numberOfLevels = 0;
   // if (placeSuggestion.length > 0)
   //   numberOfLevels = Object.keys(placeSuggestion[0]).length;
@@ -11,7 +12,6 @@ function SuggestPlaces(props) {
   return (
     <ul className="suggestion-wrap">
       {placeSuggestion.map((place, i) => {
-        console.log(place);
         return (
           <li
             onClick={(e) =>
@@ -28,8 +28,6 @@ function SuggestPlaces(props) {
                 return " >> " + place[levelNumber];
               }
             })}
-            {/* {place.continentName} {">>"} {place.countryName} {">>"}
-            {place.cityName} */}
           </li>
         );
       })}

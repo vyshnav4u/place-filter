@@ -7,6 +7,7 @@ function ShowData(props) {
   const cityInSuggestion = props.cityInSuggestion;
   const countryInSuggestion = props.countryInSuggestion;
   const continentInSuggestion = props.continentInSuggestion;
+  const placesInSuggestions = props.placesInSuggestions;
 
   let showFilteredTable = false;
   if (placeSuggestion.length > 0) showFilteredTable = true;
@@ -17,6 +18,7 @@ function ShowData(props) {
           cityInSuggestion={cityInSuggestion}
           countryInSuggestion={countryInSuggestion}
           continentInSuggestion={continentInSuggestion}
+          placesInSuggestions={placesInSuggestions}
         />
       )}
       {!showFilteredTable && <ShowAllData />}
