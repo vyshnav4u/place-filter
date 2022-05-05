@@ -56,7 +56,7 @@ ul.tbl-continent-data > li {
 }
 
 .location-data-tbl {
-  margin-top: 260px;
+  margin-top: 560px;
 }
 
 .suggestion-wrap {
@@ -88,4 +88,10 @@ section.user-input-form {
   display: grid;
   justify-content: center;
   position: relative;
+}
+
+/* -------------------------------------- */
+.place-data ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
