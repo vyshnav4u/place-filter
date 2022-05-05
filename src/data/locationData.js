@@ -27,6 +27,19 @@ export const locations = [
           },
         ],
       },
+      {
+        label: "Japan",
+        children: [
+          {
+            label: "Tokyo",
+            value: 12300,
+          },
+          {
+            label: "Konha",
+            value: 23200,
+          },
+        ],
+      },
     ],
   },
   {
