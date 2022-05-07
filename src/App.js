@@ -8,16 +8,8 @@ function App() {
   const [userInput, setUserInput] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(true);
   const [placeSuggestion, setPlaceSuggestion] = useState([]);
-  const [cityInSuggestion, setCityInSuggestion] = useState([]);
-  const [countryInSuggestion, setCountryInSuggestion] = useState([]);
-  const [continentInSuggestion, setContinentInSuggestion] = useState([]);
-  let tempCountryInSuggestion = [];
-  let tempContinentInSuggestion = [];
-  let tempCityInSuggestion = [];
-  let tempPlacesInSuggestions = {};
   const [placesInSuggestions, setPlacesInSuggestions] = useState({});
-
-  // # need obj {lvl1:continent,lvl2:country:lvl3:city...}
+  let tempPlacesInSuggestions = {};
 
   const findMatch = (
     locationData,
@@ -113,11 +105,13 @@ function App() {
           onChange={(e) => setUserInput(e.target.value)}
           onKeyUp={() => setShowSuggestions(true)}
           autoComplete="off"
+          className="inside-suggestion"
         />
         {showSuggestions && (
           <SuggestPlaces
             placeSuggestion={placeSuggestion}
             setUserInput={setUserInput}
+            showSuggestions={showSuggestions}
             setShowSuggestions={setShowSuggestions}
           />
         )}
@@ -126,9 +120,6 @@ function App() {
       <ShowData
         placeSuggestion={placeSuggestion}
         placesInSuggestions={placesInSuggestions}
-        cityInSuggestion={cityInSuggestion}
-        countryInSuggestion={countryInSuggestion}
-        continentInSuggestion={continentInSuggestion}
       />
     </div>
   );

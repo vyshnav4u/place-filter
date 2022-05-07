@@ -4,9 +4,6 @@ import ShowFilteredData from "./ShowFilteredData";
 
 function ShowData(props) {
   const placeSuggestion = props.placeSuggestion;
-  const cityInSuggestion = props.cityInSuggestion;
-  const countryInSuggestion = props.countryInSuggestion;
-  const continentInSuggestion = props.continentInSuggestion;
   const placesInSuggestions = props.placesInSuggestions;
 
   let showFilteredTable = false;
@@ -14,12 +11,7 @@ function ShowData(props) {
   return (
     <>
       {showFilteredTable && (
-        <ShowFilteredData
-          cityInSuggestion={cityInSuggestion}
-          countryInSuggestion={countryInSuggestion}
-          continentInSuggestion={continentInSuggestion}
-          placesInSuggestions={placesInSuggestions}
-        />
+        <ShowFilteredData placesInSuggestions={placesInSuggestions} />
       )}
       {!showFilteredTable && <ShowAllData />}
     </>

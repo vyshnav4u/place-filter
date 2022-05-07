@@ -1,43 +1,57 @@
 import React from "react";
 import { locations } from "../data/locationData";
-import { findTotalOfAllLocation } from "../data/locationData";
 
 function ShowAllData() {
-  const { continentTotal, countryTotal } = findTotalOfAllLocation();
-  return (
-    <div className="location-data-tbl">
-      {locations.map((continent, i) => {
-        return (
-          <section className="location-tbl-data" key={i}>
-            <ul className="tbl-continent-data">
-              <li> {continent.label} </li>
-              <li> {continentTotal[continent.label]} </li>
-            </ul>
+  let tot = {};
+  let tempSum;
+  const displayLocationData = (location, level = 0) => {
+    return (
+      <section className="place-data">
+        {location.map((place, i) => {
+          if ("children" in place) {
+            const renderHtml = displayLocationData(place.children, ++level);
 
-            {continent.children.map((country, j) => {
-              return (
-                <section key={j}>
-                  <ul className="tbl-country-data">
-                    <li> {country.label} </li>
-                    <li> {countryTotal[country.label]} </li>
-                  </ul>
-                  {country.children.map((city, k) => {
-                    return (
-                      <section key={k}>
-                        <ul className="tbl-city-data">
-                          <li> {city.label} </li>
-                          <li> {city.value} </li>
-                        </ul>
-                      </section>
-                    );
-                  })}
-                </section>
-              );
-            })}
-          </section>
-        );
-      })}
-    </div>
+            --level;
+
+            if (tot["level" + Number(level - 1)])
+              tot["level" + Number(level - 1)] += tot["level" + level];
+            else tot["level" + Number(level - 1)] = tot["level" + level];
+            tempSum = tot["level" + level];
+            tot["level" + level] = 0;
+            tot["level" + Number(level + 1)] = 0;
+            return (
+              <section key={i}>
+                <ul className={"place-name-" + level}>
+                  <li> {place.label} </li> <li> {tempSum} </li>
+                </ul>
+                <section> {renderHtml} </section>
+              </section>
+            );
+          } else {
+            if (tot["level" + level])
+              tot["level" + level] += Number(place.value);
+            else tot["level" + level] = Number(place.value);
+
+            if (tot["level" + Number(level - 1)])
+              tot["level" + Number(level - 1)] = tot["level" + level];
+            else {
+              tot["level" + Number(level - 1)] = tot["level" + level];
+            }
+
+            return (
+              <ul key={i}>
+                <li> {place.label} </li>
+                <li> {place.value} </li>
+              </ul>
+            );
+          }
+        })}
+      </section>
+    );
+  };
+
+  return (
+    <div className="location-data-tbl">{displayLocationData(locations)}</div>
   );
 }
 
